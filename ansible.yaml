@@ -3,8 +3,8 @@
   - name: copy deployment file to kubernetes master 
     copy:
       src: myimagedeployment.yaml
-      dest: /root/
+      dest: /var/jenkins_home/workspace/Ananthan Pipeline Project
   - name: delete the previous of kubernetes objects 
-    command: kubectl delete -f /root/myimagedeployment.yaml
+    command: kubectl delete -f /var/jenkins_home/workspace/Ananthan Pipeline Project/myimagedeployment.yaml
   - name: Create a Deployment by reading the definition from a local file
-    command: kubectl apply -f /root/myimagedeployment.yaml
+    command: kubectl apply -f /var/jenkins_home/workspace/Ananthan Pipeline Project/myimagedeployment.yaml
