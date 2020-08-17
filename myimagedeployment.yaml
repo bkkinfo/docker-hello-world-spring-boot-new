@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myimagedeploy
+spec:
+  selector:
+    matchLabels:
+      app: myimagedeploy
+  template:
+    metadata:
+      labels:
+        app: myimagedeploy
+    spec:
+      containers:
+      - name: myimagedeploycont
+        image: anandd6/javaappfortest:docker_tag
+        command: ["/bin/sh"]
+        ports:
+            - name: http
+              containerPort: 8080
+  replicas: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myimagedeployservice
+  labels:
+    app: myimagedeploy
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: myimagedeploy
