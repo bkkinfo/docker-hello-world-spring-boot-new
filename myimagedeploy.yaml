@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myimagetest
+spec:
+  selector:
+    matchLabels:
+      app: myimagetest
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: myimagetest
+    spec:
+      containers:
+      - name: mycontainerad
+        image: anandd6/javaappfortest:7
+        imagePullPolicy: IfNotPresent
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: myimageservice
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: myimagetest
