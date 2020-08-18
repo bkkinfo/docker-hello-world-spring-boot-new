@@ -1,2 +1,2 @@
 [test]
-52.175.217.222
+52.175.217.222 ansible_user=azureuser
