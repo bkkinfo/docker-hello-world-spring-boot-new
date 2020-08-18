@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: myimagedeploycont
-        image: anandd6/javaappfortest:docker_tag
+        image: anandd6/javaappfortest:7
         command: ["/bin/sh"]
         ports:
             - name: http
