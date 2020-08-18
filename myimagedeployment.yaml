@@ -15,7 +15,6 @@ spec:
       containers:
       - name: myimagedeploycont
         image: anandd6/javaappfortest:latest
-        command: ["/bin/sh"]
         ports:
             - name: http
               containerPort: 8080
