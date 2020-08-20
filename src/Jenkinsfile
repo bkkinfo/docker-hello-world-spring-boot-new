@@ -1,0 +1,38 @@
+node{
+    
+    stage('SCM Checkout'){
+        git url: 'https://github.com/ananthand6/docker-hello-world-spring-boot.git'
+    }
+    try{
+    stage(" Maven Clean Package"){
+      def mavenHome =  tool name: "maven", type: "maven"
+      def mavenCMD = "${mavenHome}/bin/mvn"
+      sh "${mavenCMD} clean package"
+      
+     
+    def testIssue = [fields: [ project: [key: 'DEM'],
+                                 summary: 'New JIRA Created from Jenkins.',
+                                 description: 'New JIRA Created from Jenkins.',
+                                 issuetype: [name : 'Task']]]
+
+      response = jiraNewIssue issue: testIssue, site: 'JIRA'
+
+      echo response.successful.toString()
+      echo response.data.toString()
+             
+    }
+    }
+            catch (Exception err) {
+        currentBuild.result = 'FAILURE'
+                def testIssue = [fields: [ project: [key: 'DEM'],
+                                 summary: 'Failure',
+                                 description: 'Build Failed',
+                                 issuetype: [name : 'Bug']]]
+
+      response = jiraNewIssue issue: testIssue, site: 'JIRA'
+
+      echo response.successful.toString()
+      echo response.data.toString()
+    }
+        
+     }
