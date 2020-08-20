@@ -1,5 +1,5 @@
 node{
-    
+    def buildNo = BUILD_NUMBER
     stage('SCM Checkout'){
         git url: 'https://github.com/ananthand6/docker-hello-world-spring-boot.git'
     }
@@ -9,10 +9,11 @@ node{
       def mavenCMD = "${mavenHome}/bin/mvn"
       sh "${mavenCMD} clean package"
       
-     
-    def testIssue = [fields: [ project: [key: 'TEST'],
-                                 summary: 'New JIRA Created from Jenkins.',
-                                 description: 'New JIRA Created from Jenkins.',
+     }
+	 stage("JIRA"){
+	 def testIssue = [fields: [ project: [key: 'DEMO'],
+                                 summary: "New Build Trigger in Jenkins- ${buildNo}",
+                                 description: "New build created from jenkin, Build Number ${buildNo}",
                                  issuetype: [name : 'Task']]]
 
       response = jiraNewIssue issue: testIssue, site: 'JIRA'
@@ -20,13 +21,13 @@ node{
       echo response.successful.toString()
       echo response.data.toString()
              
+	}
     }
-    }
-            catch (Exception err) {
+    catch (Exception err) {
         currentBuild.result = 'FAILURE'
-                def testIssue = [fields: [ project: [key: 'TEST'],
-                                 summary: 'Failure',
-                                 description: 'Build Failed',
+                def testIssue = [fields: [ project: [key: 'DEMO'],
+                                 summary: "Failure Build number :${buildNo} ",
+                                 description: "Build Failed : Build Number ${buildNo}",
                                  issuetype: [name : 'Bug']]]
 
       response = jiraNewIssue issue: testIssue, site: 'JIRA'
@@ -35,4 +36,4 @@ node{
       echo response.data.toString()
     }
         
-     }
+  }
