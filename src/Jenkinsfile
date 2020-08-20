@@ -1,7 +1,7 @@
 node{
     
     stage('SCM Checkout'){
-        git url: 'https://github.com/bkkinfo/ocker-hello-world-spring-boot.git'
+        git url: 'https://github.com/ananthand6/docker-hello-world-spring-boot.git'
     }
     try{
     stage(" Maven Clean Package"){
@@ -10,10 +10,9 @@ node{
       sh "${mavenCMD} clean package"
       
      
-    def testIssue = [fields: [ project: [key: 'DEM'],
+    def testIssue = [fields: [ project: [key: 'TEST'],
                                  summary: 'New JIRA Created from Jenkins.',
                                  description: 'New JIRA Created from Jenkins.',
-                                 issuePriority: [name : 'Medium'],
                                  issuetype: [name : 'Task']]]
 
       response = jiraNewIssue issue: testIssue, site: 'JIRA'
@@ -25,10 +24,9 @@ node{
     }
             catch (Exception err) {
         currentBuild.result = 'FAILURE'
-                def testIssue = [fields: [ project: [key: 'DEM'],
+                def testIssue = [fields: [ project: [key: 'TEST'],
                                  summary: 'Failure',
                                  description: 'Build Failed',
-                                 issuePriority: [name : 'Medium'],
                                  issuetype: [name : 'Bug']]]
 
       response = jiraNewIssue issue: testIssue, site: 'JIRA'
