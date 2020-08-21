@@ -12,7 +12,7 @@ node{
      }
     stage('SonarQube Analysis'){
         def mavenHome = tool name: 'maven' , type: 'maven'
-        withSonarQubeEnv('sonar'){
+        //withSonarQubeEnv('sonar'){
             sh "${mavenHome}/bin/mvn sonar:sonar -Dsonar.projectKey=sonar -Dsonar.host.url=http://52.143.7.186/bishnu/sonarqube/ -Dsonar.login=6cc399c3f90cb1fdccd0a7a80c07a5550b09dec3"
         }
     }
